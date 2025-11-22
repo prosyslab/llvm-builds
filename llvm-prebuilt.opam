@@ -1,0 +1,22 @@
+opam-version: "2.0"
+name: "llvm-prebuilt"
+synopsis: "Prebuilt LLVM with OCaml bindings"
+maintainer: "Bongjun Jang"
+authors: "Programming System Lab"
+homepage: "https://github.com/prosyslab/llvm-builds"
+
+depends: [
+  "ocaml" {= "5.2.0"}
+]
+
+conflicts: [
+  "llvm" # Cannot coexist with the standard llvm package
+]
+
+url {
+  src: "https://github.com/prosyslab/llvm-builds/releases/download/v-test/llvm-20.1.1-ocaml-5.2.0-linux-x86_64.tar.gz"
+}
+
+build: [
+  ["cp" "-r" "bin" "include" "lib" "share" "%{prefix}%/"]
+]
