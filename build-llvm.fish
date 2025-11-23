@@ -11,22 +11,20 @@ set -q _flag_llvm;    and set LLVM_VER $_flag_llvm;       or set LLVM_VER "20.1.
 set -q _flag_ocaml;   and set OCAML_VER $_flag_ocaml;     or set OCAML_VER "5.2.0"
 set -q _flag_targets; and set LLVM_TARGETS $_flag_targets; or set LLVM_TARGETS "X86;WebAssembly"
 
-# if set -q _flag_alive
-set ALIVE_OPTS "ON"
-set CONFIG_MSG "Enabled (RTTI + Assertions)"
-# else
-#     set ALIVE_OPTS "OFF"
-#     set CONFIG_MSG "Disabled"
-# end
+if set -q _flag_alive
+  set ALIVE_OPTS "ON"
+  set CONFIG_MSG "Enabled (RTTI + Assertions)"
+else
+  set ALIVE_OPTS "OFF"
+  set CONFIG_MSG "Disabled"
+end
 
 set STAGING_DIR "$PWD/llvm-$LLVM_VER"
-set ARCHIVE_NAME "llvm-$LLVM_VER-ocaml-$OCAML_VER-linux-x86_64.tar.gz"
 
 eval (opam env)
 
 rm -rf build $STAGING_DIR
 
-# We use "lib/llvm" for OCaml bindings to separate them from C++ libs.
 cmake -S llvm-project/llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_TARGETS_TO_BUILD="$LLVM_TARGETS" \
