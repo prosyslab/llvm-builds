@@ -16,7 +16,7 @@ conflicts: [
 ]
 
 url {
-  src: "https://github.com/prosyslab/llvm-builds/releases/download/v20.1.1-5.2.0/llvm-20.1.1-ocaml-5.2.0-linux-x86_64.tar.gz"
+  src: "https://github.com/prosyslab/llvm-builds/releases/download/v20.1.1-5.2.0/llvm-20.1.1-ocaml-5.2.0.tar.gz"
 }
 
 build: [
