@@ -19,30 +19,21 @@ set CONFIG_MSG "Enabled (RTTI + Assertions)"
 #     set CONFIG_MSG "Disabled"
 # end
 
-set CMAKE_PREFIX "/usr/local"
-set STAGING_DIR "$PWD/staging"
+set STAGING_DIR "$PWD/llvm-$LLVM_VER"
 set ARCHIVE_NAME "llvm-$LLVM_VER-ocaml-$OCAML_VER-linux-x86_64.tar.gz"
 
 eval (opam env)
 
-# --- 3. Clone Source ---
-if not test -d llvm-project
-    echo "Cloning LLVM $LLVM_VER..."
-    git clone --depth 1 --branch llvmorg-$LLVM_VER https://github.com/llvm/llvm-project.git
-end
-
-# --- 4. Configure & Build ---
 rm -rf build $STAGING_DIR
 
 # We use "lib/llvm" for OCaml bindings to separate them from C++ libs.
 cmake -S llvm-project/llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX="$CMAKE_PREFIX" \
     -DLLVM_TARGETS_TO_BUILD="$LLVM_TARGETS" \
     -DLLVM_ENABLE_PROJECTS="clang;lld" \
     -DLLVM_ENABLE_BINDINGS=ON \
     -DLLVM_BINDINGS_LIST="ocaml" \
-    -DLLVM_OCAML_INSTALL_PATH="lib/llvm" \
+    -DLLVM_OCAML_INSTALL_PATH="lib" \
     -DLLVM_ENABLE_ZSTD=OFF \
     -DLLVM_ENABLE_RTTI=$ALIVE_OPTS \
     -DLLVM_INCLUDE_TESTS=OFF \
