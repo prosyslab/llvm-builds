@@ -2,3 +2,4 @@ build
 staging
 llvm-project
 *.tar.gz
+llvm-20.1.1
